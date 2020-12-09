@@ -12,6 +12,8 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   background-color: grey;
+  max-width: 900px;
+  margin: auto;
 `
 const InputWrapper = styled.div`
   display: flex;
@@ -40,8 +42,6 @@ const App = () => {
       setWorkouts(initialWorkouts)
     })
   }, [])
-
-  console.log(workouts)
 
   return (
     <Fragment>

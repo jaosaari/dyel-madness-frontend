@@ -39,6 +39,8 @@ const GlobalStyle = createGlobalStyle`
     scroll-behavior: smooth;
     text-rendering: optimizeSpeed;
     line-height: 1.5;
+
+    background-color: grey;
   }
 
   /* Remove list styles on ul, ol elements with a class attribute */

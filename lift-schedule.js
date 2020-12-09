@@ -1,0 +1,38 @@
+const workouts = [
+  {
+    lift: "shoulder press",
+    max: 75,
+    next: true,
+    week: 1,
+    queue: 1,
+    assLiftOne: { name: "Dip", sets: 5, reps: 15 },
+    assLiftTwo: { name: "Chin-Up", sets: 5, reps: 10 },
+  },
+  {
+    lift: "deadlift",
+    max: 150,
+    next: false,
+    week: 1,
+    queue: 2,
+    assLiftOne: { name: "Good Morning", sets: 5, reps: 12 },
+    assLiftTwo: { name: "Hanging Leg Raise", sets: 5, reps: 15 },
+  },
+  {
+    lift: "bench press",
+    max: 100,
+    next: false,
+    week: 1,
+    queue: 3,
+    assLiftOne: { name: "Dumbbell Chest Press", sets: 5, reps: 15 },
+    assLiftTwo: { name: "Dumbbell Row", sets: 5, reps: 10 },
+  },
+  {
+    lift: "squat",
+    max: 120,
+    next: false,
+    week: 1,
+    queue: 4,
+    assLiftOne: { name: "Leg Press", sets: 5, reps: 15 },
+    assLiftTwo: { name: "Leg Curl", sets: 5, reps: 10 },
+  },
+]

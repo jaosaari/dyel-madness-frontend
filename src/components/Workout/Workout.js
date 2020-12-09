@@ -5,7 +5,11 @@ const List = styled.ul``
 const ListTitle = styled.h2``
 const ListSubtitle = styled.p``
 const ListItem = styled.li`
+  display: flex;
   border-top: 2px solid grey;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 1rem;
 `
 
 const Section = styled.div`
@@ -22,57 +26,17 @@ const Button = styled.button`
   cursor: pointer;
   align-self: center;
 `
+const Checkbox = styled.input`
+  height: 2rem;
+  width: 2rem;
+`
+const Input = styled.input``
 
 const Workout = ({ workouts }) => {
-  const [max, setMax] = useState(75)
-  const [liftName, setLiftName] = useState("Shoulder Press")
-  const [currentWeek, setCurrentWeek] = useState(1)
+  // const [currentWeek, setCurrentWeek] = useState(1)
+  const [week, setWeek] = useState([])
   const [workoutOfTheDay, setWorkoutOfTheDay] = useState(["empty"])
   const [started, setStarted] = useState(false)
-
-  // const workouts = [
-  //   {
-  //     lift: "shoulder press",
-  //     max: 75,
-  //     next: true,
-  //     week: 1,
-  //     queue: 1,
-  //     assLiftOne: { name: "Dip", sets: 5, reps: 15 },
-  //     assLiftTwo: { name: "Chin-Up", sets: 5, reps: 10 },
-  //   },
-  //   {
-  //     lift: "deadlift",
-  //     max: 150,
-  //     next: false,
-  //     week: 1,
-  //     queue: 2,
-  //     assLiftOne: { name: "Good Morning", sets: 5, reps: 12 },
-  //     assLiftTwo: { name: "Hanging Leg Raise", sets: 5, reps: 15 },
-  //   },
-  //   {
-  //     lift: "bench press",
-  //     max: 100,
-  //     next: false,
-  //     week: 1,
-  //     queue: 3,
-  //     assLiftOne: { name: "Dumbbell Chest Press", sets: 5, reps: 15 },
-  //     assLiftTwo: { name: "Dumbbell Row", sets: 5, reps: 10 },
-  //   },
-  //   {
-  //     lift: "squat",
-  //     max: 120,
-  //     next: false,
-  //     week: 1,
-  //     queue: 4,
-  //     assLiftOne: { name: "Leg Press", sets: 5, reps: 15 },
-  //     assLiftTwo: { name: "Leg Curl", sets: 5, reps: 10 },
-  //   },
-  // ]
-
-  console.log("workouts state in Workout.js Component: ", workouts)
-  // const workoutOfTheDay = workouts.find(({ next }) => next === true)
-
-  // console.log("hehe", workoutOfTheDay)
 
   const cycle = [
     {
@@ -105,26 +69,42 @@ const Workout = ({ workouts }) => {
     },
   ]
 
-  const thisWeek = cycle.find(({ week }) => week === currentWeek)
+  useEffect(() => {
+    setWeek(cycle.find(({ week }) => week === workoutOfTheDay.week))
+  }, [workoutOfTheDay])
 
-  //   Week 1 = 65, 75, 85%, Sets 3, Reps 5
-  //   Week 2 = 70, 80, 90%, Sets 3, Reps 3
-  //   Week 3 = 75, 85, 95%, Sets 3, Reps 5/3/1
-  //   Week 4 = 40, 50, 60%, Sets 3, Reps 5
+  console.log("week updated: ", week)
 
+  console.log("workoutOfTheDay updated: ", workoutOfTheDay)
   const handleStart = () => {
     console.log("Button clicked & HandleStart initiated")
     setWorkoutOfTheDay(workouts.find(({ next }) => next === true))
     setStarted(true)
+    // setCurrentWeek(workoutOfTheDay.week)
+    // createAddArrays()
   }
-  console.log("wod: ", workoutOfTheDay)
+  // const thisWeek = cycle.find(({ week }) => week === currentWeek)
+  // console.log(thisWeek)
+  // const createAddArrays = () => {
+  //   const data = new Array(5).fill().map((value, index) => ({
+  //     id: index,
+  //     title: "faker.lorem.words(5)",
+  //     body: "faker.lorem.sentences(4)",
+  //   }))
+  //   return data
+  // }
 
-  const data = new Array(5).fill().map((value, index) => ({
-    id: index,
-    title: "faker.lorem.words(5)",
-    body: "faker.lorem.sentences(4)",
+  const AssistOneData = new Array(5).fill().map((value, index) => ({
+    id: index + 1,
+    ...workoutOfTheDay.assLiftOne,
   }))
 
+  const AssistTwoData = new Array(5).fill().map((value, index) => ({
+    id: index + 1,
+    ...workoutOfTheDay.assLiftTwo,
+  }))
+
+  console.log(AssistOneData)
   return (
     <>
       {started ? (
@@ -134,44 +114,65 @@ const Workout = ({ workouts }) => {
             <p>Week {workoutOfTheDay.week}</p>
             <p>{new Date().toLocaleDateString("fi-FI").split("")}</p>
           </Section>
-          <Section>
-            <List>
-              <ListTitle>{workoutOfTheDay.lift}</ListTitle>
-              <ListSubtitle>Main lift</ListSubtitle>
-              <ListItem>
-                <p>{thisWeek.firstSet.name}</p>
-                <p>{thisWeek.firstSet.percentage * (max * 0.9)}</p>
-              </ListItem>
-              <ListItem>
-                <p>{thisWeek.secondSet.name}</p>
-                <p>{thisWeek.secondSet.percentage * (max * 0.9)}</p>
-              </ListItem>
-              <ListItem>
-                <p>{thisWeek.thirdSet.name}</p>
-                <p>{thisWeek.thirdSet.percentage * (max * 0.9)}</p>
-              </ListItem>
-            </List>
-          </Section>
-          <Section>
-            <List>
-              <ListTitle>Dip</ListTitle>
-              <ListSubtitle>Assistant lift 1</ListSubtitle>
-              {data.map(item => (
-                <ListItem>
-                  <h3>
-                    {item.title} - {item.id}
-                  </h3>
-                  <p>{item.body}</p>
-                </ListItem>
-              ))}
-            </List>
-          </Section>
-          <Section>
-            <List>
-              <ListTitle>Chin-Up</ListTitle>
-              <ListSubtitle>Assistant lift 2</ListSubtitle>
-            </List>
-          </Section>
+          {week ? (
+            <>
+              <Section>
+                <List>
+                  <ListTitle>{workoutOfTheDay.lift}</ListTitle>
+                  <ListSubtitle>Main lift</ListSubtitle>
+                  <ListItem>
+                    <p>{week.firstSet.name}</p>
+                    <p>
+                      {week.firstSet.percentage * (workoutOfTheDay.max * 0.9)}
+                    </p>
+                    <Checkbox type="checkbox" />
+                  </ListItem>
+                  <ListItem>
+                    <p>{week.secondSet.name}</p>
+                    <p>
+                      {week.secondSet.percentage * (workoutOfTheDay.max * 0.9)}
+                    </p>
+                    <Checkbox type="checkbox" />
+                  </ListItem>
+                  <ListItem>
+                    <p>{week.thirdSet.name}</p>
+                    <p>
+                      {week.thirdSet.percentage * (workoutOfTheDay.max * 0.9)}
+                    </p>
+                    <Checkbox type="checkbox" />
+                  </ListItem>
+                </List>
+              </Section>
+              <Section>
+                <List>
+                  <ListTitle>{workoutOfTheDay.assLiftOne.name}</ListTitle>
+                  <ListSubtitle>Assistant lift 1</ListSubtitle>
+                  {AssistOneData.map((item, index) => (
+                    <ListItem key={index}>
+                      <p>Set {item.id}</p>
+                      <Input />
+                      <Checkbox type="checkbox" />
+                    </ListItem>
+                  ))}
+                </List>
+              </Section>
+              <Section>
+                <List>
+                  <ListTitle>{workoutOfTheDay.assLiftTwo.name}</ListTitle>
+                  <ListSubtitle>Assistant lift 2</ListSubtitle>
+                  {AssistTwoData.map((item, index) => (
+                    <ListItem key={index}>
+                      <p>Set {item.id}</p>
+                      <Input />
+                      <Checkbox type="checkbox" />
+                    </ListItem>
+                  ))}
+                </List>
+              </Section>
+            </>
+          ) : (
+            <p>bummer</p>
+          )}
         </>
       ) : (
         <Section>
