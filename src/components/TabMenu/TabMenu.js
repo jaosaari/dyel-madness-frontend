@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import Tab from "./Tab"
+import { Link } from "react-router-dom"
 
 const MenuWrapper = styled.div`
   width: 100%;
@@ -15,9 +16,15 @@ const MenuWrapper = styled.div`
 const TabMenu = () => {
   return (
     <MenuWrapper>
-      <Tab>Overview</Tab>
-      <Tab>Workout</Tab>
-      <Tab>Settings</Tab>
+      <Tab>
+        <Link to="/overview">Overview</Link>
+      </Tab>
+      <Tab>
+        <Link to="/workout">Workout</Link>
+      </Tab>
+      <Tab>
+        <Link to="/settings">Settings</Link>
+      </Tab>
     </MenuWrapper>
   )
 }
